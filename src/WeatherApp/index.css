@@ -1,0 +1,407 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.inputArea {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+
+.inputArea:focus {
+  outline: none;
+  border: none;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  margin-top: 50px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+
+.error {
+  color: rgb(255, 2, 2);
+}
+
+.inputArea::placeholder {
+  color: white;
+  opacity: 70%;
+  font-size: 20px;
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  padding-top: 30px;
+
+  position: fixed;
+}
+
+h1 {
+  color: white;
+  font-size: 135px;
+  font-weight: 400;
+}
+
+.cityName {
+  color: white;
+  font-size: 60px;
+  font-weight: 400;
+}
+
+.date {
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.icon {
+  width: 200px;
+  height: 200px;
+}
+
+.weatherMain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+}
+
+.name-date {
+  display: grid;
+  gap: 3px;
+}
+
+.details {
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 40px;
+}
+
+.description {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 50px;
+}
+
+.details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+  list-style: none;
+  padding-left: 0;
+  color: white;
+  border-bottom: 1px solid white;
+  padding-bottom: 50px;
+}
+
+.detailsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 150px;
+}
+
+.detailsContainer p {
+  font-size: 18px;
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.detailsTitle {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.indicator img {
+  width: 25px;
+  height: 25px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 300px;
+  /* justify-content: space-between; */
+  padding-left: 80px;
+  overflow: hidden;
+}
+
+.right {
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.033);
+  padding-left: 40px;
+  padding-right: 110px;
+  padding-bottom: 50px;
+  border-left: 5px solid rgba(123, 185, 230, 0.208);
+}
+
+
+.forecats-section {
+  border-bottom: 1px solid white;
+  padding-bottom: 50px;
+}
+
+
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding-left: 0;
+  gap: 20px;
+}
+
+.forecast-item {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  color: white;
+}
+
+.forecast-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-description {
+  display: flex;
+  align-content: center; 
+  gap: 30px;
+}
+
+.time-desc {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.time {
+  font-size: 18px;
+}
+
+.desc {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.celsi {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.daily-forecast {
+  border-top: 1px solid white;
+  margin-top: 50px;
+  padding-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  /* .container {
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-attachment: scroll;
+    position: relative;
+    background-position: center;
+    margin: 0;
+    height: auto;
+  } */
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    min-height: auto;
+    /* height: auto; */
+    padding: 10px;
+  }
+
+  /* .container > * {
+    height: auto;
+    width: 100%;
+    margin-bottom: 10px;
+  } */
+
+  .left {
+    display: flex;
+    gap: 50px;
+    padding-top: 30px;
+    padding-left: 30px;
+  }
+
+  .right {
+    border-left: none;
+    padding: 0;
+    margin: 0;
+    border-top: 5px solid rgba(123, 185, 230, 0.208);
+    box-sizing: border-box;
+  }
+
+  .inputArea {
+    font-size: 12px;
+    gap: 0;
+
+    padding-bottom: 5px;
+  }
+
+  .weatherMain {
+    display: flex;
+    align-items: center;
+    position: sticky;
+  }
+
+  .weatherMain h1 {
+    font-size: 64px;
+  }
+
+  .cityName {
+    font-size: 30px;
+  }
+
+  .date {
+    font-size: 10px;
+  }
+
+  .icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .details {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .details-list {
+    list-style: none;
+    padding-left: 0;
+    color: white;
+    font-size: 14px;
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+    margin-top: 30px;
+  }
+
+  .input-container {
+    display: inline-flex;
+    position: fixed;
+    gap: 1px;
+    border-bottom: 1px solid white;
+    margin-top: 50px;
+    padding-bottom: 1px;
+    right: 3vw;
+    bottom: 114.5%;
+  /* position: absolute;
+    right: 5vw;
+    left: auto;
+    width: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px; */
+  }
+
+  .input-container img {
+    width: 12px;
+    height: 12px;
+  }
+
+  .detailsContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .detailsContainer p {
+    font-size: 14px;
+  }
+
+  .indicator {
+    display: flex;
+    align-items: center;
+  }
+
+  .indicator p {
+    font-size: 14px;
+  }
+
+  .indicator img {
+    width: 17px;
+    height: 17px;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+    padding-top: 0;
+    position: sticky;
+  }
+
+  .inputArea::placeholder {
+    font-size: 12px;
+  }
+
+  .time {
+    font-size: 14px;
+  }
+
+  .desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .celsi {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .forecast-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px 0 30px;
+  }
+
+  .icon-description {
+  display: flex;
+  align-content: center;
+
+  gap: 10px;
+}
+
+
+}
