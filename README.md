@@ -4,7 +4,7 @@ Bu bir Hava Durumu proqramıdır. İstifadəçi axtarış yerinə məkan adı ya
 
 ## 🚀 Proyektin Linki
 
-➡️ [Weather App - Vercel](link)
+➡️ [Weather App - Vercel](https://weather-app-tau-vert-30.vercel.app/)
 
 ## 👨‍💻İstifadə Etdiyim Texnologiyalar
 
