@@ -23,7 +23,7 @@ function WeatherApp() {
   const [weather, setWeather] = useState(null);
   const [bgImage, setBgImage] = useState("");
   const [date, setDate] = useState(<FormatDate />);
-  const [icon, setIcon] = useState("");
+  const [icon, setIcon] = useState(null);
   const [error, setError] = useState("");
   const [forecast, setForecast] = useState([]);
 
@@ -127,7 +127,7 @@ function WeatherApp() {
         setIcon(isDay ? cloudyGif : require("../Animations/sunNightGif.json"));
         break;
       case "Rain": // yağış
-        setBgImage(isDay ? "/images/rain3.jpg" : "/images/rain.jpg");
+        setBgImage(isDay ? "/images/rain4.jpg" : "/images/rain.jpg");
         setIcon(rainGif);
         break;
       case "Thunderstorm": // ildırım
