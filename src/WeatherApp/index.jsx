@@ -137,7 +137,7 @@ function WeatherApp() {
         setIcon(lightningGif);
         break;
       case "Snow": // qarlı hava
-        setBgImage(isDay ? "/images/snow-night.jpg" : "/images/snow.jpg");
+        setBgImage(isDay ? "/images/snow4.jpg" : "/images/snow-night.jpg");
         setIcon(snowGif2);
         break;
       default:
