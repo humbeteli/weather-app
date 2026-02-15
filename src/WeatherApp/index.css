@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -42,6 +43,25 @@ body {
   padding-bottom: 10px;
 }
 
+.suggestions {
+  background: white;
+  position: absolute;
+  border-radius: 0 0 10px 10px;
+  width: 75%;
+  list-style: none;
+  padding: 0;
+  margin-top: 38px;
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: #eee;
+}
+
 .error {
   color: rgb(255, 2, 2);
 }
@@ -62,14 +82,26 @@ body {
 
 h1 {
   color: white;
-  font-size: 135px;
+  font-size: 150px;
   font-weight: 400;
+}
+
+.nameContainer {
+  display: grid;
 }
 
 .cityName {
   color: white;
-  font-size: 60px;
+  font-size: 55px;
+  font-weight: 600;
+  max-width: 470px;
+  white-space: nowrap;
+}
+
+.countryName {
+  font-size: 30px;
   font-weight: 400;
+  color: white;
 }
 
 .date {
@@ -150,7 +182,6 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 300px;
-  /* justify-content: space-between; */
   padding-left: 80px;
   overflow: hidden;
 }
@@ -164,12 +195,10 @@ h1 {
   border-left: 5px solid rgba(123, 185, 230, 0.208);
 }
 
-
 .forecats-section {
   border-bottom: 1px solid white;
   padding-bottom: 50px;
 }
-
 
 .forecast-list {
   display: flex;
@@ -193,7 +222,7 @@ h1 {
 
 .icon-description {
   display: flex;
-  align-content: center; 
+  align-content: center;
   gap: 30px;
 }
 
@@ -224,33 +253,14 @@ h1 {
 }
 
 @media (max-width: 768px) {
-  /* .container {
-    display: flex;
-    flex-direction: column;
-    background-size: cover;
-    background-attachment: scroll;
-    position: relative;
-    background-position: center;
-    margin: 0;
-    height: auto;
-  } */
-
   .container {
     display: flex;
     flex-direction: column;
     background-size: cover;
     background-position: center;
     min-height: auto;
-    /* height: auto; */
     padding: 10px;
   }
-
-  /* .container > * {
-    height: auto;
-    width: 100%;
-    margin-bottom: 10px;
-  } */
-
   .left {
     display: flex;
     gap: 50px;
@@ -272,7 +282,6 @@ h1 {
     padding-bottom: 5px;
   }
 
-
   .weatherMain {
     display: flex;
     align-items: center;
@@ -284,7 +293,13 @@ h1 {
   }
 
   .cityName {
-    font-size: 30px;
+    font-size: 24px;
+  }
+
+  .countryName {
+    font-size: 16px;
+
+    color: white;
   }
 
   .date {
@@ -325,13 +340,6 @@ h1 {
     padding-bottom: 1px;
     right: 3vw;
     bottom: 114.5%;
-  /* position: absolute;
-    right: 5vw;
-    left: auto;
-    width: fit-content;
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px; */
   }
 
   .input-container img {
@@ -404,11 +412,25 @@ h1 {
   }
 
   .icon-description {
-  display: flex;
-  align-content: center;
+    display: flex;
+    align-content: center;
 
-  gap: 10px;
-}
+    gap: 10px;
+  }
 
+  .suggestions {
+    background: white;
+    position: absolute;
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin-top: 22px;
+    font-size: 14px;
+  }
 
+  .suggestions li {
+    padding: 10px;
+    cursor: pointer;
+  }
 }

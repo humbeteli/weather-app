@@ -16,16 +16,21 @@ import humadity from "../pics/rutubet.svg";
 import cloudy from "../pics/buludluluq.svg";
 import wind from "../pics/kulek.svg";
 import FormatDate from "../FormatDate";
-// import pressure from '../src/pics/pressure-svgrepo-com.svg'
 
 function WeatherApp() {
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState(null);
   const [bgImage, setBgImage] = useState("");
-  const [date, setDate] = useState(<FormatDate />);
+  const [date, setDate] = useState("");
   const [icon, setIcon] = useState(null);
   const [error, setError] = useState("");
   const [forecast, setForecast] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+
+  function getCountryFullName(code) {
+    const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+    return regionNames.of(code);
+  }
 
   //todo forecast hissəsində həftə adları azərbaycanca olmur deyə bunu yazdım
   const azeDays = [
@@ -46,14 +51,14 @@ function WeatherApp() {
     //todo səhifə ilk dəfə yüklənəndə default olaraq çıxan şəhər
 
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=Sumqayıt&appid=${apiKey}&units=metric&lang=az`
+      `https://api.openweathermap.org/data/2.5/weather?q=Sumqayıt&appid=${apiKey}&units=metric&lang=az`,
     )
       .then((res) => res.json())
       .then((result) => {
         setWeather(result);
       });
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=Sumqayıt&appid=${apiKey}&units=metric&lang=az`
+      `https://api.openweathermap.org/data/2.5/forecast?q=Sumqayıt&appid=${apiKey}&units=metric&lang=az`,
     )
       .then((res) => res.json())
       .then((forecastData) => {
@@ -63,36 +68,55 @@ function WeatherApp() {
 
   //todo enterə basanda ekrana məlumatlar çıxır
 
-  const search = (e) => {
-    if (e.key === "Enter") {
-      //! input boş olanda enterə basılanda çıxan mesaj
-      if (!query.trim()) {
+ 
+
+  useEffect(() => {
+
+    if (query.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`,
+      )
+        .then((res) => res.json())
+        .then((data) => setSuggestions(data));
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [query, apiKey]);
+
+  const search = (e, cityName = null, countryCode = null) => {
+    // əgər cityName varsa ya da enter basılıbsa işləsin
+    if (cityName || (e && e.key === "Enter")) {
+      const searchCity = countryCode ? `${cityName},${countryCode}` : (cityName || query);
+
+      if (!searchCity.trim()) {
         setError("Zəhmət olmasa bir məkan adı yazın.");
         return;
       }
 
+      setSuggestions([]);
+
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric&lang=az`
+        `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}&units=metric&lang=az`,
       )
         .then((res) => res.json())
         .then((result) => {
-          //! yazılan şəhər tapılmadıqda çıxan mesaj
           if (result.cod === "404") {
-            setError("Məkan tapılmadı. Təkrar cəhd edin.");
-            // setWeather(null);
-            setQuery("");
+            setError("Məkan tapılmadı.");
           } else {
             setWeather(result);
             setError("");
             setQuery("");
 
             fetch(
-              `https://api.openweathermap.org/data/2.5/forecast?q=${query}&appid=${apiKey}&units=metric&lang=az`
+              `https://api.openweathermap.org/data/2.5/forecast?q=${searchCity}&appid=${apiKey}&units=metric&lang=az`,
             )
               .then((res) => res.json())
-              .then((forecastData) => {
-                setForecast(forecastData.list);
-              });
+              .then((forecastData) => setForecast(forecastData.list));
           }
         });
     }
@@ -132,7 +156,7 @@ function WeatherApp() {
         break;
       case "Thunderstorm": // ildırım
         setBgImage(
-          isDay ? "/images/lightning2.jpg" : "/images/thunderstorm.jpg"
+          isDay ? "/images/lightning2.jpg" : "/images/thunderstorm.jpg",
         );
         setIcon(lightningGif);
         break;
@@ -147,12 +171,33 @@ function WeatherApp() {
 
   //todo hər dəqiqə tarix yenilənir
   useEffect(() => {
-    const timer = setInterval(() => {
-      setDate(<FormatDate />);
-    }, 60000);
+  const timer = setInterval(() => {
+    // əgər weather datası varsa onun timezonu göstər yoxdursa 0
+    const tz = weather ? weather.timezone : 0;
+    setDate(FormatDate(tz));
+  }, 1000); // hər saniyə yenilənsin
 
-    return () => clearInterval(timer);
-  }, []);
+  return () => clearInterval(timer);
+}, [weather]);
+
+  useEffect(() => {
+    if (query.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`,
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setSuggestions(data);
+        });
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [query, apiKey]);
 
   return (
     <div
@@ -171,7 +216,12 @@ function WeatherApp() {
             <div className="weatherMain">
               <h1>{Math.floor(weather.main.temp)}°</h1>
               <div className="name-date">
-                <span className="cityName">{weather.name}</span>
+                <div className="nameContainer">
+                  <span className="cityName">{weather.name}</span>
+                  <span className="countryName">
+                    {getCountryFullName(weather.sys.country)}
+                  </span>
+                </div>
                 <span className="date">{date}</span>
               </div>
               <div className="icon">
@@ -187,24 +237,38 @@ function WeatherApp() {
           <div className="input-container">
             <input
               type="search"
-              placeholder="Məkan daxil edin..."
+              placeholder="Məkan daxil edin"
               className="inputArea"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={search}
+              onBlur={() => setTimeout(() => setSuggestions([]), 200)}
+              onFocus={() => { if(query.length >= 2) search({key: "Enter"}) }}
             />
             <img
               src={searchImg}
               alt="search"
               onClick={() => search({ key: "Enter" })}
               style={{ cursor: "pointer" }}
-            ></img>
+            ></img>{" "}
+            {suggestions.length > 0 && (
+              <ul className="suggestions">
+                {suggestions.map((city, index) => (
+                  <li
+                    key={index}
+                    onClick={() => search(null, city.name)}
+                  >
+                    {city.name}, {city.country}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           {error && <p className="error">{error}</p>}
         </div>
         {weather && (
           <div>
-            <p className="details">Hava Təfərrüatları...</p>
+            <p className="details">Hava Təfərrüatları</p>
             <p className="description">
               {weather.weather[0].description.toUpperCase()}
             </p>
